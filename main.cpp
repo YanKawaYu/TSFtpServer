@@ -16,6 +16,8 @@ int main(int argc, const char * argv[])
 {
     int port = 2100;
     int listenFd = startup(port);
+    //ignore SIGCHLD signal, which created by child process when exit, to avoid zombie process
+    signal(SIGCHLD,SIG_IGN);
     while (1) {
         int newFd = accept(listenFd, (struct sockaddr *)NULL, NULL);
         if (newFd == -1) {
@@ -28,8 +30,12 @@ int main(int argc, const char * argv[])
         struct timeval timeout = {3,0};
         setsockopt(newFd, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout,sizeof(struct timeval));
         int pid = fork();
+        //fork error
+        if (pid < 0) {
+            printf("fork error: %s(errno: %d)\n",strerror(errno),errno);
+        }
         //child process
-        if (pid == 0) {
+        else if (pid == 0) {
             //close useless socket
             close(listenFd);
             send(newFd, TS_FTP_STATUS_READY, strlen(TS_FTP_STATUS_READY), 0);
@@ -58,6 +64,7 @@ int main(int argc, const char * argv[])
                 }
             }
             close(newFd);
+            std::cout<<"exit"<<std::endl;
             exit(0);
         }
         //parent process
