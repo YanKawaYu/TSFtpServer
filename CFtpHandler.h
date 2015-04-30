@@ -15,6 +15,17 @@
 #include <unistd.h>
 #include <fcntl.h>
 
+#include <cstdio>
+#include <string.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <errno.h>
+#include <signal.h>
+
+/**************************************
+ * FTP Commond List
+ *************************************/
+
 #define COMMAND_PORT "PORT"
 #define COMMAND_PASSIVE "PASV"
 #define COMMAND_LIST "LIST"
@@ -34,6 +45,11 @@
 #define COMMAND_MLSD "MLSD"
 #define COMMAND_FEAT "FEAT"
 #define COMMAND_CDUP "CDUP"
+
+
+/**************************************
+* FTP Response Codes
+ *************************************/
 
 #define TS_FTP_STATUS_READY                     "220 TS FTP Server ready...\r\n"
 
