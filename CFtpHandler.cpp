@@ -281,7 +281,7 @@ bool CFtpHandler::handleRequest(char *buff) {
         sendResponse(m_connFd, msg);
         int newFd = getDataSocket();
         //send file
-        std::ifstream file(ROOT_PATH+currentPath+fileName);
+        std::ifstream file((ROOT_PATH+currentPath+fileName).c_str(),std::ifstream::in);
         file.seekg(0, std::ifstream::beg);
         while(file.tellg() != -1)
         {
@@ -309,7 +309,7 @@ bool CFtpHandler::handleRequest(char *buff) {
         int newFd = getDataSocket();
         //receive file
         ofstream file;
-        file.open(ROOT_PATH+currentPath+fileName, ios::out | ios::binary);
+        file.open((ROOT_PATH+currentPath+fileName).c_str(), ios::out | ios::binary);
         char buff[1024];
         while (1) {
             int n = (int)recv(newFd, buff, sizeof(buff), 0);
