@@ -125,7 +125,7 @@ int CFtpHandler::getDataSocket() {
 bool CFtpHandler::handleRequest(char *buff) {
     stringstream recvStream;
     recvStream<<buff;
-    
+
     cout<<buff;
     string command;
     recvStream>>command;
@@ -364,6 +364,9 @@ bool CFtpHandler::handleRequest(char *buff) {
     else if (command == COMMAND_NOOP || command == COMMAND_OPTS){
         msg = TS_FTP_STATUS_OK;
     }
+    else
+    	msg = TS_FTP_STATUS_CMD_ERROR;
+
     
     sendResponse(m_connFd, msg);
     return isClose;

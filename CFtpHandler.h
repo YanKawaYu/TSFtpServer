@@ -71,6 +71,7 @@
 #define TS_FTP_STATUS_DELETE                    "250 DELE command successful."
 #define TS_FTP_STATUS_CUR_DIR(x)                "257 \""+x+"\" is current directory."
 #define TS_FTP_STATUS_PWD_REQ(x)                "331 Password required for "+x
+#define TS_FTP_STATUS_CMD_ERROR					"500 Syntax error, command unrecognized."
 #define TS_FTP_STATUS_PWD_ERROR                 "530 Not logged in,password error."
 #define TS_FTP_STATUS_FILE_NOT_FOUND            "550 File not found"
 #define TS_FTP_STATUS_CWD_FAILED(x)             "550 CWD command failed. \"" +x+ "\": directory not found."
