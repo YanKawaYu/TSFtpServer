@@ -129,7 +129,10 @@ bool CFtpHandler::handleRequest(char *buff) {
     cout<<buff;
     string command;
     recvStream>>command;
-    
+
+    /* allow client input lowercast commond */
+    std::transform(command.begin(), command.end(), command.begin(),::toupper);
+
     bool isClose = false;
     string msg;
     //username
@@ -282,6 +285,7 @@ bool CFtpHandler::handleRequest(char *buff) {
         int newFd = getDataSocket();
         //send file
         std::ifstream file((ROOT_PATH+currentPath+fileName).c_str(),std::ifstream::in);
+
         file.seekg(0, std::ifstream::beg);
         while(file.tellg() != -1)
         {

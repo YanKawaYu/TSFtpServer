@@ -9,23 +9,23 @@
 #ifndef __TSFtpServer__CFtpHandler__
 #define __TSFtpServer__CFtpHandler__
 
+#include <algorithm>
 #include <iostream>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <unistd.h>
 #include <fcntl.h>
 
+#include <cctype>
 #include <cstdio>
 #include <string.h>
 #include <stdlib.h>
-#include <unistd.h>
 #include <errno.h>
 #include <signal.h>
 
 /**************************************
  * FTP Commond List
  *************************************/
-
 #define COMMAND_PORT "PORT"
 #define COMMAND_PASSIVE "PASV"
 #define COMMAND_LIST "LIST"
@@ -50,7 +50,6 @@
 /**************************************
 * FTP Response Codes
  *************************************/
-
 #define TS_FTP_STATUS_READY                     "220 TS FTP Server ready...\r\n"
 
 #define TS_FTP_STATUS_OPEN_DATA_CHANNEL         "150 Opening data channel for directory list."
