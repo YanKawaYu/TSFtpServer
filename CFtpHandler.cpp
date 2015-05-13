@@ -262,7 +262,7 @@ bool CFtpHandler::handleRequest(char *buff) {
             struct tm tm = *gmtime(&s.st_mtime);
             //list with -l param
             if (param == "-l") {
-                stream<<s.st_mode<<" "<<s.st_nlink<<" "<<s.st_uid<<" "<<s.st_gid<<" "<<setw(10)<<s.st_size<<" "<<tm.tm_mon<<" "<<tm.tm_mday<<" "<<tm.tm_year<<" "<<ent->d_name<<endl;
+                stream<<s.st_mode<<" "<<s.st_nlink<<" "<<s.st_uid<<" "<<s.st_gid<<" "<<setw(10)<<s.st_size<<" "<<tm.tm_mon+1<<" "<<tm.tm_mday<<" "<<tm.tm_year+1900<<" "<<ent->d_name<<endl;
             }else {
                 stream<<ent->d_name<<endl;
             }
