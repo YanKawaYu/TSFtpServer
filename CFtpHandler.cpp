@@ -125,11 +125,14 @@ int CFtpHandler::getDataSocket() {
 bool CFtpHandler::handleRequest(char *buff) {
     stringstream recvStream;
     recvStream<<buff;
-    
+
     cout<<buff;
     string command;
     recvStream>>command;
-    
+
+    /* allow client input lowercast commond */
+    std::transform(command.begin(), command.end(), command.begin(),::toupper);
+
     bool isClose = false;
     string msg;
     //username
@@ -259,7 +262,7 @@ bool CFtpHandler::handleRequest(char *buff) {
             struct tm tm = *gmtime(&s.st_mtime);
             //list with -l param
             if (param == "-l") {
-                stream<<s.st_mode<<" "<<s.st_nlink<<" "<<s.st_uid<<" "<<s.st_gid<<" "<<setw(10)<<s.st_size<<" "<<tm.tm_mon<<" "<<tm.tm_mday<<" "<<tm.tm_year<<" "<<ent->d_name<<endl;
+                stream<<s.st_mode<<" "<<s.st_nlink<<" "<<s.st_uid<<" "<<s.st_gid<<" "<<setw(10)<<s.st_size<<" "<<tm.tm_mon+1<<" "<<tm.tm_mday<<" "<<tm.tm_year+1900<<" "<<ent->d_name<<endl;
             }else {
                 stream<<ent->d_name<<endl;
             }
@@ -282,6 +285,7 @@ bool CFtpHandler::handleRequest(char *buff) {
         int newFd = getDataSocket();
         //send file
         std::ifstream file((ROOT_PATH+currentPath+fileName).c_str(),std::ifstream::in);
+
         file.seekg(0, std::ifstream::beg);
         while(file.tellg() != -1)
         {
@@ -360,6 +364,9 @@ bool CFtpHandler::handleRequest(char *buff) {
     else if (command == COMMAND_NOOP || command == COMMAND_OPTS){
         msg = TS_FTP_STATUS_OK;
     }
+    else
+    	msg = TS_FTP_STATUS_CMD_ERROR;
+
     
     sendResponse(m_connFd, msg);
     return isClose;

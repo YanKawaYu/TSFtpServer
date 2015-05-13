@@ -9,23 +9,23 @@
 #ifndef __TSFtpServer__CFtpHandler__
 #define __TSFtpServer__CFtpHandler__
 
+#include <algorithm>
 #include <iostream>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <unistd.h>
 #include <fcntl.h>
 
+#include <cctype>
 #include <cstdio>
 #include <string.h>
 #include <stdlib.h>
-#include <unistd.h>
 #include <errno.h>
 #include <signal.h>
 
 /**************************************
  * FTP Commond List
  *************************************/
-
 #define COMMAND_PORT "PORT"
 #define COMMAND_PASSIVE "PASV"
 #define COMMAND_LIST "LIST"
@@ -50,7 +50,6 @@
 /**************************************
 * FTP Response Codes
  *************************************/
-
 #define TS_FTP_STATUS_READY                     "220 TS FTP Server ready...\r\n"
 
 #define TS_FTP_STATUS_OPEN_DATA_CHANNEL         "150 Opening data channel for directory list."
@@ -72,6 +71,7 @@
 #define TS_FTP_STATUS_DELETE                    "250 DELE command successful."
 #define TS_FTP_STATUS_CUR_DIR(x)                "257 \""+x+"\" is current directory."
 #define TS_FTP_STATUS_PWD_REQ(x)                "331 Password required for "+x
+#define TS_FTP_STATUS_CMD_ERROR					"500 Syntax error, command unrecognized."
 #define TS_FTP_STATUS_PWD_ERROR                 "530 Not logged in,password error."
 #define TS_FTP_STATUS_FILE_NOT_FOUND            "550 File not found"
 #define TS_FTP_STATUS_CWD_FAILED(x)             "550 CWD command failed. \"" +x+ "\": directory not found."
